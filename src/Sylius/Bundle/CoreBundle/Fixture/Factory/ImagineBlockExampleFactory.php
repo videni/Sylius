@@ -69,8 +69,8 @@ final class ImagineBlockExampleFactory implements ExampleFactoryInterface
                 })->setDefault('publishEndDate', function (Options $options) {
                     return $this->faker->dateTimeBetween('now', '30 days');
                 })
+                ->setDefined('linkUrl')
                 ->setRequired(['image', 'parentDocument'])
-                ->setAllowedTypes('parentDocument')
                 ->setAllowedTypes('publishable', 'bool')
                 ->setAllowedTypes('parentDocument', AbstractBlock::class)
         ;
@@ -87,6 +87,8 @@ final class ImagineBlockExampleFactory implements ExampleFactoryInterface
         $imagineBlock = $this->imagineBlockFactory->createNew();
         $imagineBlock->setLabel($options['label']);
         $imagineBlock->setName($options['name']);
+
+        $imagineBlock->setLinkUrl($options['linkUrl']);
         $imagineBlock->setPublishable($options['publishable']);
         $imagineBlock->setPublishStartDate($options['publishStartDate']);
         $imagineBlock->setPublishEndDate($options['publishEndDate']);
