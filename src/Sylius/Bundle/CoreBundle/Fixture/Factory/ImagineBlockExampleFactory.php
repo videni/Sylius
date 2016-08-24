@@ -87,8 +87,9 @@ final class ImagineBlockExampleFactory implements ExampleFactoryInterface
         $imagineBlock = $this->imagineBlockFactory->createNew();
         $imagineBlock->setLabel($options['label']);
         $imagineBlock->setName($options['name']);
-
-        $imagineBlock->setLinkUrl($options['linkUrl']);
+        if (array_key_exists('linkUrl',$options)) {
+            $imagineBlock->setLinkUrl($options['linkUrl']);
+        }
         $imagineBlock->setPublishable($options['publishable']);
         $imagineBlock->setPublishStartDate($options['publishStartDate']);
         $imagineBlock->setPublishEndDate($options['publishEndDate']);
