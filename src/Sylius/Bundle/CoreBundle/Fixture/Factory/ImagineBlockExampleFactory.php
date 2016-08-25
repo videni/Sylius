@@ -62,7 +62,7 @@ final class ImagineBlockExampleFactory implements ExampleFactoryInterface
                     return $this->faker->boolean(90);
                 })
                 ->setDefault('filter', function (Options $options) {
-                    return $this->faker->randomElement($this->filterConfiguration->all());
+                    return $this->faker->randomElement(array_keys($this->filterConfiguration->all()));
                 })
                 ->setDefault('publishStartDate', function (Options $options) {
                     return $this->faker->dateTimeBetween('-30 days','now');
@@ -90,6 +90,7 @@ final class ImagineBlockExampleFactory implements ExampleFactoryInterface
         if (array_key_exists('linkUrl',$options)) {
             $imagineBlock->setLinkUrl($options['linkUrl']);
         }
+        $imagineBlock->setFilter($options['filter']);
         $imagineBlock->setPublishable($options['publishable']);
         $imagineBlock->setPublishStartDate($options['publishStartDate']);
         $imagineBlock->setPublishEndDate($options['publishEndDate']);
