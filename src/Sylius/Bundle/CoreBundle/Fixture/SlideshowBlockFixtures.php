@@ -6,6 +6,7 @@ use Sylius\Bundle\CoreBundle\Fixture\Factory\ImagineBlockExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\SlideShowBlockExampleFactory;
 use Sylius\Bundle\FixturesBundle\Fixture\AbstractFixture;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
  * @author Vidy Videni<videni@foxmail.com>
@@ -30,7 +31,8 @@ final class SlideshowBlockFixtures extends AbstractFixture
     public function __construct(SlideShowBlockExampleFactory $slideShowBlockExampleFactory,
                                 ImagineBlockExampleFactory $imagineBlockExampleFactory,
                                 RepositoryInterface $slideshowBlockRepository
-    ) {
+    )
+    {
         $this->slideShowBlockExampleFactory = $slideShowBlockExampleFactory;
         $this->imagineBlockExampleFactory = $imagineBlockExampleFactory;
         $this->slideshowBlockRepository = $slideshowBlockRepository;
@@ -60,11 +62,12 @@ final class SlideshowBlockFixtures extends AbstractFixture
             $imagePath = sprintf('%s/../Resources/fixtures/%s', __DIR__, $image);
 
             $info = pathinfo($imagePath);
-            $fileName = basename($imagePath, '.'.$info['extension']);
+            $fileName = basename($imagePath, '.' . $info['extension']);
 
             $imagineBlock = $this->imagineBlockExampleFactory->create([
                 'label' => $fileName,
                 'name' => $fileName,
+                'filter' => $options['filter'],
                 'publishable' => true,
                 'image' => $imagePath,
                 'parentDocument' => $slideshowBlock,
@@ -74,5 +77,15 @@ final class SlideshowBlockFixtures extends AbstractFixture
         }
 
         $this->slideshowBlockRepository->add($slideshowBlock);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureOptionsNode(ArrayNodeDefinition $optionsNode)
+    {
+        $optionsNode
+            ->children()
+                ->scalarNode('filter')->defaultValue('sylius_large')->end();
     }
 }
