@@ -4,11 +4,11 @@ Sylius\Component\Core\Model\Channel:
     properties:
         defaultLocale:
             expose: true
-            groups: [test]
+            groups: [test1]
         taxCalculationStrategy:
             expose: true
             type: string
-            groups: [Detailed,test]
+            groups: [Detailed,test1]
     relations:
         - rel: self
           href:

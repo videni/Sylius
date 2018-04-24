@@ -222,14 +222,14 @@ class ResourceController extends Controller
         $this->eventDispatcher->dispatchMultiple(ResourceActions::INDEX, $configuration, $resources);
 
         $view = View::create($resources);
-// var_dump(get_class($resources->getInline()->getResources()[1]),get_class_methods($resources) , get_class($resources));exit("ok");
 
+         //PaginatedRepresentation的属性在序列化分组Default中
         $context = \JMS\Serializer\SerializationContext::create()->setGroups([
-                'Default',
-                'items' => [
+                'Default',  //要指定PaginatedRepresentation序列化分组为Default, 也就是说PaginatedRepresentation所有属性都要序列化
+                'items' => [  //这里我们覆盖序列化items里面的每个对象（这个地方是指Product,）使用test分组，而不是使用上层传递下来的Default分组。
                     "test",
-                    'channels'=> [
-                        "test"
+                     'channels'=> [  //这里我们覆盖序列化channel的每个对象，使用test1分组。 这个就完成对象图多层分组覆盖的功能。
+                        "test1"
                     ]
                 ]
         ]);
