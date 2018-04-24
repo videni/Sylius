@@ -5,6 +5,7 @@ Sylius\Component\Core\Model\Product:
         shortDescription:
             expose: true
             type: string
+            groups: [test]
         averageRating:
             expose: true
             type: float
@@ -16,7 +17,7 @@ Sylius\Component\Core\Model\Product:
         channels:
             expose: true
             type: array
-            groups: [Detailed]
+            groups: [Detailed, test]
         reviews:
             expose: true
             type: array

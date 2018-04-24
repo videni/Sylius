@@ -6,7 +6,7 @@ Sylius\Component\Channel\Model\Channel:
             expose: true
             type: integer
             xml_attribute: true
-            groups: [Default, Detailed]
+            groups: [Default, Detailed, test]
         code:
             expose: true
             type: string

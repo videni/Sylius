@@ -222,6 +222,20 @@ class ResourceController extends Controller
         $this->eventDispatcher->dispatchMultiple(ResourceActions::INDEX, $configuration, $resources);
 
         $view = View::create($resources);
+// var_dump(get_class($resources->getInline()->getResources()[1]),get_class_methods($resources) , get_class($resources));exit("ok");
+
+        $context = \JMS\Serializer\SerializationContext::create()->setGroups([
+                'Default',
+                'items' => [
+                    "test",
+                    'channels'=> [
+                        "test"
+                    ]
+                ]
+        ]);
+
+
+        return new \Symfony\Component\HttpFoundation\JsonResponse($this->get('jms_serializer')->serialize($resources, 'json', $context), 200, [], true);
 
         if ($configuration->isHtmlRequest()) {
             $view
@@ -475,8 +489,7 @@ class ResourceController extends Controller
         $this->isGrantedOr403($configuration, ResourceActions::BULK_DELETE);
         $resources = $this->resourcesCollectionProvider->get($configuration, $this->repository);
 
-        if (
-            $configuration->isCsrfProtectionEnabled() &&
+        if ($configuration->isCsrfProtectionEnabled() &&
             !$this->isCsrfTokenValid(ResourceActions::BULK_DELETE, $request->request->get('_csrf_token'))
         ) {
             throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
